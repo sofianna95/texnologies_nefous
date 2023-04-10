@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>icsd321_4002</artifactId>
-  <description>icsd 321_4002 project</description>
+  <artifactId>texnologies_nefous</artifactId>
+  <description>project texnologies nefous </description>
   <groupId>com.example</groupId>
   <modelVersion>4.0.0</modelVersion>
-  <name>icsd321_4002</name>
+  <name>texnologies_nefous</name>
 
   <parent>
     <artifactId>spring-boot-starter-parent</artifactId>
