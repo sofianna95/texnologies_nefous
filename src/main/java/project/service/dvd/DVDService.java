@@ -7,13 +7,17 @@ public interface DVDService {
 
     DVDDTO create(DVDDTO dvdDTO);
 
-    DVDDTO findById(Long id);
+    DVDDTO findById(String id);
 
-    void delete(Long id);
+    void delete(String id);
 
-    DVDDTO update(Long id, DVDDTO dvddto);
+    DVDDTO update(String id, DVDDTO dvddto);
 
-    List<DVDDTO> findByTitleLike(String title);
+    DVDDTO findByTitle(String title);
+
+    boolean existsByTitle(String title);
+
+
 
     List<DVDDTO> findAll();
 }

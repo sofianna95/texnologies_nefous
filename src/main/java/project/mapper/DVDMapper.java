@@ -2,6 +2,8 @@ package project.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import project.dto.DVDDTO;
 import project.persistence.entity.DVDEntity;
 

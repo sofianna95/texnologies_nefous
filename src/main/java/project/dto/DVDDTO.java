@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class DVDDTO {
     @Schema(accessMode = AccessMode.READ_ONLY)
-    private Long id;
+    private String id;
 
     @NotNull(message = "must not be null")
     private String title;

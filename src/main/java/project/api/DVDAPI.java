@@ -14,25 +14,18 @@ public interface DVDAPI {
 
 
     @PostMapping("/dvds/create")
-    ResponseEntity<DVDDTO> create(@Valid @RequestBody DVDDTO dvdDTO, @RequestHeader("loggedInUserName") String loggedInUserName,
-            @RequestHeader("token") String token);
-
-    @GetMapping("dvds/{id}")
-    ResponseEntity<DVDDTO> findById(Long id, @RequestHeader("loggedInUserName") String loggedInUserName,
-            @RequestHeader("token") String token);
+    ResponseEntity<DVDDTO> create(@Valid @RequestBody DVDDTO dvdDTO);
 
     @GetMapping("dvds")
-    ResponseEntity<List<DVDDTO>> findByAll(@RequestHeader("loggedInUserName") String loggedInUserName,
-            @RequestHeader("token") String token);
+    ResponseEntity<List<DVDDTO> > search(@RequestParam(required = false) String title,@RequestParam(required = false) String id);
+
 
     @DeleteMapping("{id}/delete")
-    ResponseEntity<String> delete(@PathVariable("id") Long id, @RequestHeader("loggedInUserName") String loggedInUserName,
-            @RequestHeader("token") String token);
+    ResponseEntity<String> delete(@PathVariable("id") String id);
 
 
     @PutMapping("/dvds/{id}")
-    ResponseEntity<DVDDTO> update(@PathVariable("id") Long id, @RequestBody DVDDTO dvdDTO, @RequestHeader("loggedInUserName") String loggedInUserName,
-            @RequestHeader("token") String token);
+    ResponseEntity<DVDDTO> update(@PathVariable("id") String id, @RequestBody DVDDTO dvdDTO);
 
 }
 

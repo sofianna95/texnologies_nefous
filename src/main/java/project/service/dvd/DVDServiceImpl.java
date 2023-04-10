@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.dto.DVDDTO;
 import project.errorhandling.exception.DVDNotFoundException;
+import project.errorhandling.exception.NumberOfPiecesException;
+import project.errorhandling.exception.TitleCannotBeUpdatedException;
 import project.mapper.DVDMapper;
 import project.persistence.entity.DVDEntity;
 import project.persistence.repository.DVDRepository;
@@ -31,7 +33,7 @@ public class DVDServiceImpl implements DVDService {
     }
 
     @Override
-    public DVDDTO findById(Long id) {
+    public DVDDTO findById(String id) {
         Optional<DVDEntity> dvdEntity = dvdRepository.findById(id);
         if (dvdEntity.isPresent()) {
             return DVDMapper.mapEntityToDTO(dvdEntity.get());
@@ -41,7 +43,7 @@ public class DVDServiceImpl implements DVDService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(String id) {
         if (dvdRepository.existsById(id)) {
             dvdRepository.deleteById(id);
             return;
@@ -50,21 +52,36 @@ public class DVDServiceImpl implements DVDService {
     }
 
     @Override
-    public DVDDTO update(Long id, DVDDTO dvddto) {
+    public DVDDTO update(String  id, DVDDTO dvddto) {
         findById(id);
-        DVDEntity dvdEntity = DVDMapper.mapDTOToEntity(dvddto);
-        dvdEntity.setId(id);
-        DVDEntity updateEntity = dvdRepository.save(dvdEntity);
-        return DVDMapper.mapEntityToDTO(updateEntity);
+        if(dvddto.getTitle() != null){
+            throw  new TitleCannotBeUpdatedException();
+        }
+        if(dvddto.getNumberOfPieces() > 0){
+            DVDEntity dvdEntity = DVDMapper.mapDTOToEntity(dvddto);
+            dvdEntity.setId(id);
+            DVDEntity updateEntity = dvdRepository.save(dvdEntity);
+            return DVDMapper.mapEntityToDTO(updateEntity);
+        }
+        throw new NumberOfPiecesException();
+
     }
 
     @Override
-    public List<DVDDTO> findByTitleLike(String title) {
+    public DVDDTO findByTitle(String title) {
 
-        List<DVDEntity> dvdEntityList = dvdRepository.findByTitleLike("%" + title + "%");
+        Optional<DVDEntity> dvdEntity = dvdRepository.findByTitle(title);
+        if (dvdEntity.isPresent()) {
+            return DVDMapper.mapEntityToDTO(dvdEntity.get());
+        }
+        throw new DVDNotFoundException(title);
 
-        return DVDMapper.mapEntityListToDTOList(dvdEntityList);
+    }
 
+    @Override
+    public boolean existsByTitle(String title) {
+        Optional<DVDEntity> dvdEntity = dvdRepository.findByTitle(title);
+        return dvdEntity.isPresent();
     }
 
     @Override
